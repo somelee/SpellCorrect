@@ -60,21 +60,21 @@ void DictProducer::build_dir()//建立词频库
 				{
 					c += 32;
 				}
-				if(97 > c || c > 122)//除小写字母外，都改为空格
+				if(c < 97 || c > 122)//除小写字母外，都改为空格
 				{
 					c = 32;
 				}
-				istringstream iss(elem);//分单词
-				while(iss >> str)//建立词频词库
+			}
+			istringstream iss(elem);//分单词
+			while(iss >> str)//建立词频词库
+			{
+				map<string,int>::iterator mit;
+				mit = _dict.find(str);
+				if(mit == _dict.end())
 				{
-					map<string,int>::iterator mit;
-					mit = _dict.find(str);
-					if(mit == _dict.end())
-					{
-						_dict[str] = 1;
-					}else{
-						++mit->second;
-					}
+					_dict[str] = 1;
+				}else{
+					++mit->second;
 				}
 			}
 		}
@@ -83,7 +83,7 @@ void DictProducer::build_dir()//建立词频库
 
 void DictProducer::store_dict(const char * filePath)//将词频库写入到磁盘
 {
-	//build_dir();
+	LogInfo("store_dict is starting...");
 	ofstream ofs(filePath);//打开要把词频写入的文件
 	if(!ofs.good())//打开失败处理
 	{
