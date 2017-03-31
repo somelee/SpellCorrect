@@ -45,7 +45,7 @@ inline string int2str(int num)
 }
 
 #define postfix(msg) \
-	string(msg).append("[").append(__FILE__)\
+	string(string("\n").append(msg)).append("\n[").append(__FILE__)\
 			   .append(":").append(__FUNCTION__)\
 			   .append(":").append(int2str(__LINE__)).append("]")
 
